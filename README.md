@@ -1,8 +1,8 @@
 # Statamic Static Site Generator
 
-Generate static sites with Statamic 3.
+Generate static sites with Statamic 4.
 
-![Statamic 3.0+](https://img.shields.io/badge/Statamic-3.0+-FF269E?style=for-the-badge&link=https://statamic.com)
+![Statamic 4.0+](https://img.shields.io/badge/Statamic-4.0+-FF269E?style=for-the-badge&link=https://statamic.com)
 
 
 
