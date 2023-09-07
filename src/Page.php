@@ -3,10 +3,11 @@
 namespace Statamic\StaticSite;
 
 use Exception;
-use Illuminate\Filesystem\Filesystem;
-use Illuminate\Http\Exceptions\HttpResponseException;
-use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Str;
 use Statamic\Facades\Blink;
+use Illuminate\Filesystem\Filesystem;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Exceptions\HttpResponseException;
 
 class Page
 {
@@ -117,7 +118,8 @@ class Page
         if(isset($this->config['index_filenames']) && $this->config['index_filenames'] === false) {
             
             if($isRootEntry || empty($url) || $url === '/') {
-                $url = $this->config['destination'] . $url . 'index';
+                $url = $this->config['destination'] . $url;
+                $url .= (Str::endsWith($url, '/') ? '' : '/') . 'index';
             } else {
                 $url = $this->config['destination'] . $url;
             }
