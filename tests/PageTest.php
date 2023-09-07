@@ -21,6 +21,30 @@ class PageTest extends TestCase
     }
 
     /** @test */
+    public function it_gets_the_path_without_index_filename()
+    {
+        $entry = $this->mock(Entry::class);
+        $entry->shouldReceive('urlWithoutRedirect')->andReturn('/foo/bar');
+
+        $page = $this->page($entry, ['destination' => '/path/to/static', 'index_filenames' => false]);
+
+        $this->assertEquals('/path/to/static/foo/bar.html', $page->path());
+        $this->assertEquals('/path/to/static/foo', $page->directory());
+    }
+
+    /** @test */
+    public function it_gets_the_path_without_index_filename_except_root()
+    {
+        $entry = $this->mock(Entry::class);
+        $entry->shouldReceive('urlWithoutRedirect')->andReturn('/');
+
+        $page = $this->page($entry, ['destination' => '/path/to/static', 'index_filenames' => false]);
+
+        $this->assertEquals('/path/to/static/index.html', $page->path());
+        $this->assertEquals('/path/to/static', $page->directory());
+    }
+
+    /** @test */
     public function it_gets_the_path_of_a_url_with_a_file_extension()
     {
         $entry = $this->mock(Entry::class);

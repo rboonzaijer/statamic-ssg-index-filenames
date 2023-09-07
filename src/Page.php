@@ -104,10 +104,34 @@ class Page
 
         $ext = pathinfo($url, PATHINFO_EXTENSION) ?: 'html';
 
-        $url = $this->config['destination'].$url;
 
-        if ($ext === 'html') {
-            $url .= '/index.html';
+        $isRootEntry = false;
+        if(isset($this->content->collection) && $this->content->collection->structure() !== null) {
+            $root = optional($this->content->collection->structure()->trees()->first())->root();
+
+            if($root !== null && $root['entry'] === $this->content->id) {
+                $isRootEntry = true;
+            }
+        }
+
+        if(isset($this->config['index_filenames']) && $this->config['index_filenames'] === false) {
+            
+            if($isRootEntry || empty($url) || $url === '/') {
+                $url = $this->config['destination'] . $url . 'index';
+            } else {
+                $url = $this->config['destination'] . $url;
+            }
+
+            if ($ext === 'html') {
+                $url .= '.html';
+            }
+
+        } else {
+            $url = $this->config['destination'] . $url;
+
+            if ($ext === 'html') {
+                $url .= '/index.html';
+            }
         }
 
         return $url;
